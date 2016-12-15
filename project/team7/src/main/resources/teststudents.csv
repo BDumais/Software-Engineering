@@ -1,0 +1,6 @@
+D", "COMPSCI", "2212B", "001", "-12345678", "Number", "Neg", "", "SBS4", "badnum@uwo.ca"
+"10", "A", "1119", "2","UGRD", "COMPSCI", "2212B", "001", "2501111111", "Number", "Large", "", "SBS4", "lrgnum@uwo.ca"
+"10", "A", "1119", "2","UGRD", "COMPSCI", "2212B", "001", "250000000", "Number", "Valid", "", "SBS4", "valid@uwo.ca"
+This is not a valid line
+"10", "A", "1119", "2","UGRD", "COMPSCI", "2212B", "001", "250000001", "Email", "Duplicate", "", "SBS4", "valid@uwo.ca"
+

@@ -1,0 +1,282 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version last-->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="accounts_receivable_report" pageWidth="612" pageHeight="792" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="9f7719a2-6591-4640-af42-964bb55dc332">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="customers"/>
+	<style name="balanceOwing" hAlign="Right" pattern="¤#,##0.###;¤-#,##0.###">
+		<conditionalStyle>
+			<conditionExpression><![CDATA[$F{balanceOwing} > 0]]></conditionExpression>
+			<style forecolor="#FF0000"/>
+		</conditionalStyle>
+	</style>
+	<parameter name="logo" class="java.lang.Object" isForPrompting="false"/>
+	<queryString language="SQL">
+		<![CDATA[]]>
+	</queryString>
+	<field name="balanceOwing" class="java.lang.Double">
+		<fieldDescription><![CDATA[balanceOwing]]></fieldDescription>
+	</field>
+	<field name="firstName" class="java.lang.String">
+		<fieldDescription><![CDATA[firstName]]></fieldDescription>
+	</field>
+	<field name="gender" class="java.lang.String">
+		<fieldDescription><![CDATA[gender]]></fieldDescription>
+	</field>
+	<field name="lastName" class="java.lang.String">
+		<fieldDescription><![CDATA[lastName]]></fieldDescription>
+	</field>
+	<field name="planName" class="java.lang.String">
+		<fieldDescription><![CDATA[planName]]></fieldDescription>
+	</field>
+	<sortField name="planName"/>
+	<sortField name="balanceOwing" order="Descending"/>
+	<sortField name="lastName"/>
+	<variable name="groupBalance" class="java.lang.Double" resetType="Group" resetGroup="plan" calculation="Sum">
+		<variableExpression><![CDATA[$F{balanceOwing}]]></variableExpression>
+	</variable>
+	<variable name="totalBalance" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{balanceOwing}]]></variableExpression>
+	</variable>
+	<variable name="subscriberCount" class="java.lang.Integer" calculation="Count">
+		<variableExpression><![CDATA[$F{firstName}]]></variableExpression>
+	</variable>
+	<variable name="maleCount" class="java.lang.Integer" calculation="Sum">
+		<variableExpression><![CDATA[$F{gender} == "Male" ? 1 : 0]]></variableExpression>
+	</variable>
+	<variable name="femaleCount" class="java.lang.Integer" calculation="Sum">
+		<variableExpression><![CDATA[$F{gender} == "Female" ? 1 : 0]]></variableExpression>
+	</variable>
+	<variable name="liteCount" class="java.lang.Integer" calculation="Sum">
+		<variableExpression><![CDATA[$F{planName} == "Plan 1: Lite" ? 1: 0]]></variableExpression>
+	</variable>
+	<variable name="expressCount" class="java.lang.Integer" calculation="Sum">
+		<variableExpression><![CDATA[$F{planName} == "Plan 2: Express" ? 1 : 0]]></variableExpression>
+	</variable>
+	<variable name="extremeCount" class="java.lang.Integer" calculation="Sum">
+		<variableExpression><![CDATA[$F{planName} == "Plan 3: Extreme" ? 1 : 0]]></variableExpression>
+	</variable>
+	<variable name="extremePlusCount" class="java.lang.Integer" calculation="Sum">
+		<variableExpression><![CDATA[$F{planName} == "PLan 4: Extreme Plus" ? 1 : 0]]></variableExpression>
+	</variable>
+	<variable name="liteBalance" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{planName} == "Plan 1: Lite" ? $F{balanceOwing} : 0]]></variableExpression>
+	</variable>
+	<variable name="expressBalance" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{planName} == "Plan 2: Express" ? $F{balanceOwing} : 0]]></variableExpression>
+	</variable>
+	<variable name="extremeBalance" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{planName} == "Plan 3: Extreme" ? $F{balanceOwing} : 0]]></variableExpression>
+	</variable>
+	<variable name="extremePlusBalance" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{planName} == "Plan 4: Extreme Plus" ? $F{balanceOwing} : 0]]></variableExpression>
+	</variable>
+	<group name="plan">
+		<groupExpression><![CDATA[$F{planName}]]></groupExpression>
+		<groupHeader>
+			<band height="50">
+				<textField>
+					<reportElement x="0" y="0" width="572" height="50" uuid="aaf85f34-3bec-4a02-98ac-a923316155f9"/>
+					<textElement>
+						<font size="18" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{planName}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="80">
+				<textField>
+					<reportElement style="balanceOwing" x="140" y="10" width="70" height="30" uuid="4b39b995-7160-4cfd-b63a-6d602e68f9de"/>
+					<textElement>
+						<font isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{groupBalance}]]></textFieldExpression>
+				</textField>
+				<line>
+					<reportElement x="140" y="0" width="70" height="1" uuid="f5545df2-f353-4853-aebb-28803669f763">
+						<property name="local_mesure_unitheight" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					</reportElement>
+				</line>
+			</band>
+		</groupFooter>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="99" splitType="Stretch">
+			<staticText>
+				<reportElement x="402" y="0" width="170" height="79" uuid="499b2f6c-cf14-49ea-8936-f47f924b8102"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="24" isBold="true"/>
+				</textElement>
+				<text><![CDATA[ACME Interest]]></text>
+			</staticText>
+			<image>
+				<reportElement mode="Opaque" x="0" y="20" width="50" height="50" backcolor="#FF0000" uuid="6cd37ec4-8231-41e5-88c9-dd9b5561b1ca">
+					<property name="local_mesure_unitx" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+					<property name="local_mesure_unity" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+				</reportElement>
+			</image>
+			<staticText>
+				<reportElement x="0" y="70" width="572" height="29" uuid="60cf8840-02aa-47c9-9dcf-664f1a0e5639"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="20" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Accounts Receivable Report]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="35" splitType="Stretch"/>
+	</pageHeader>
+	<detail>
+		<band height="22" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="0" width="70" height="22" uuid="e2245bc4-4245-4110-a8e3-20f80503d506"/>
+				<textFieldExpression><![CDATA[$F{firstName}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="70" y="0" width="70" height="22" uuid="ca3d385f-2e5e-4bff-a017-b074a943c16a"/>
+				<textFieldExpression><![CDATA[$F{lastName}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="balanceOwing" x="140" y="0" width="70" height="22" uuid="9f39e981-147b-4325-a1c9-ed21418d00c3"/>
+				<textFieldExpression><![CDATA[$F{balanceOwing}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="35" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="466" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="571" height="31" uuid="a55e94bd-6706-4f6d-aa71-64938574a76a"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="20" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Subscriber Summary]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="49" width="100" height="20" uuid="3be75324-40f1-4f4d-a647-5b61d6512c33"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Subscriber Count:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="31" width="100" height="20" uuid="c5a2523e-c3ed-4c6c-86bc-bda3f79f3021"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Total Balances:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="90" width="100" height="20" uuid="5cc820af-6c77-46b1-bba5-2f8403b3d519"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Female Subscribers:]]></text>
+			</staticText>
+			<textField>
+				<reportElement style="balanceOwing" x="121" y="31" width="108" height="20" uuid="e7a1c840-916f-48f2-8bf5-a411aef3fa27"/>
+				<textElement textAlignment="Left"/>
+				<textFieldExpression><![CDATA[$V{totalBalance}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="120" y="51" width="108" height="20" uuid="8e88e197-e44e-4679-b73b-20c9f896e048"/>
+				<textFieldExpression><![CDATA[$V{subscriberCount}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="121" y="69" width="108" height="20" uuid="3e5827e0-273d-4af3-9518-a952d234bdba"/>
+				<textFieldExpression><![CDATA[$V{maleCount}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="120" y="90" width="108" height="20" uuid="f522e528-91d8-4b14-bb06-16b020f95752"/>
+				<textFieldExpression><![CDATA[$V{femaleCount}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="69" width="100" height="20" uuid="60a8cc14-3315-4e87-9c33-e97ba883c628"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Male Subscribers:]]></text>
+			</staticText>
+			<pie3DChart>
+				<chart evaluationTime="Report">
+					<reportElement x="370" y="30" width="200" height="200" uuid="66823f5e-a162-4e64-b750-f44e908f75c0"/>
+					<chartTitle/>
+					<chartSubtitle/>
+					<chartLegend/>
+				</chart>
+				<pieDataset maxCount="4">
+					<pieSeries>
+						<keyExpression><![CDATA["Lite"]]></keyExpression>
+						<valueExpression><![CDATA[$V{liteCount}]]></valueExpression>
+					</pieSeries>
+					<pieSeries>
+						<keyExpression><![CDATA["Express"]]></keyExpression>
+						<valueExpression><![CDATA[$V{expressCount}]]></valueExpression>
+					</pieSeries>
+					<pieSeries>
+						<keyExpression><![CDATA["Extreme"]]></keyExpression>
+						<valueExpression><![CDATA[$V{extremeCount}]]></valueExpression>
+					</pieSeries>
+					<pieSeries>
+						<keyExpression><![CDATA["Extreme Plus"]]></keyExpression>
+						<valueExpression><![CDATA[$V{extremePlusCount}]]></valueExpression>
+					</pieSeries>
+				</pieDataset>
+				<pie3DPlot labelFormat="{0} ({2})" legendLabelFormat="{0}">
+					<plot/>
+					<itemLabel/>
+				</pie3DPlot>
+			</pie3DChart>
+			<bar3DChart>
+				<chart evaluationTime="Report">
+					<reportElement x="0" y="266" width="572" height="200" uuid="069df364-9f7e-47ff-ba21-7c6f1eba3576"/>
+					<chartTitle>
+						<titleExpression><![CDATA["Account Balances by Plan"]]></titleExpression>
+					</chartTitle>
+					<chartSubtitle/>
+					<chartLegend/>
+				</chart>
+				<categoryDataset>
+					<categorySeries>
+						<seriesExpression><![CDATA["Lite"]]></seriesExpression>
+						<categoryExpression><![CDATA["Balance Owing"]]></categoryExpression>
+						<valueExpression><![CDATA[$V{liteBalance}]]></valueExpression>
+					</categorySeries>
+					<categorySeries>
+						<seriesExpression><![CDATA["Express"]]></seriesExpression>
+						<categoryExpression><![CDATA["Balance Owing"]]></categoryExpression>
+						<valueExpression><![CDATA[$V{expressBalance}]]></valueExpression>
+					</categorySeries>
+					<categorySeries>
+						<seriesExpression><![CDATA["Extreme"]]></seriesExpression>
+						<categoryExpression><![CDATA["Balance Owing"]]></categoryExpression>
+						<valueExpression><![CDATA[$V{extremeBalance}]]></valueExpression>
+					</categorySeries>
+					<categorySeries>
+						<seriesExpression><![CDATA["Extreme Plus"]]></seriesExpression>
+						<categoryExpression><![CDATA["Balance Owing"]]></categoryExpression>
+						<valueExpression><![CDATA[$V{extremePlusBalance}]]></valueExpression>
+					</categorySeries>
+				</categoryDataset>
+				<bar3DPlot>
+					<plot/>
+					<itemLabel/>
+					<categoryAxisFormat>
+						<axisFormat/>
+					</categoryAxisFormat>
+					<valueAxisFormat>
+						<axisFormat/>
+					</valueAxisFormat>
+				</bar3DPlot>
+			</bar3DChart>
+		</band>
+	</summary>
+</jasperReport>

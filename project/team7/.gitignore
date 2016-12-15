@@ -1,0 +1,17 @@
+#Web Documents
+*.html
+*.css
+*.form
+nbactions.xml
+#Indexing files
+[Tt]humbds.db
+*.DS_Store
+#Built java files
+*.class
+#The maven default build output directory
+target/
+#IntelliJ IDE Stuff
+*.iml
+.idea/
+#Datafile
+*.dat
